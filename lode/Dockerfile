@@ -4,11 +4,12 @@ ADD https://github.com/essepuntato/LODE/archive/master.zip /lode/
 
 RUN ls /lode
 
-EXPOSE 9090
+# EXPOSE 9090
 
 RUN cd /lode \
-		&& unzip master.zip \
-		&& cd LODE-master
+    && unzip master.zip \
+    && cd LODE-master
 
-WORKDIR /lode/LODE-master
-CMD ["mvn", "clean", "jetty:run"]
+# WORKDIR /lode/LODE-master
+# CMD ["mvn", "clean", "jetty:run", "-Djetty.http.port=9999"]
+CMD ["echo"]

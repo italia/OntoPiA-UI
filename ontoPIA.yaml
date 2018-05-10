@@ -1,0 +1,61 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ontopia
+spec:
+  ports:
+  - name: virtuoso
+    port: 8890
+    targetPort: 8890
+    protocol: TCP
+  # - name: lode
+  #   port: 9090
+  #   targetPort: 8080
+  #   protocol: TCP
+  - name: lodview
+    port: 8080
+    targetPort: 8080
+    protocol: TCP
+  selector:
+    app: ontoPia
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: ontopia-deployment
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: ontoPia
+        node-type: worker
+    spec:
+      containers:
+        - name: virtuoso
+          image: nexus.teamdigitale.test/virtuoso:1.0.0
+          env:
+            - name: SPARQL_UPDATE
+              value: "true"
+          ports:
+            - containerPort: 8890
+        - name: lode
+          image: nexus.teamdigitale.test/lode:1.0.1-SNAPSHOT
+          # ports:
+          #   - containerPort: 9090
+          resources:
+            requests:
+              memory: "2Gi"
+            limits:
+              memory: "2Gi"
+        - name: lodview
+          image: nexus.teamdigitale.test/lodview:1.0.0
+          # ports:
+          #   - containerPort: 8080
+          resources:
+            requests:
+              memory: "2Gi"
+            limits:
+              memory: "2Gi"
+      nodeSelector:
+        node-type: worker
