@@ -1,8 +1,10 @@
-docker build -t nexus.teamdigitale.test/virtuoso:1.0.0 ./virtuoso
-docker push nexus.teamdigitale.test/virtuoso:1.0.0
+#!/bin/bash
 
-docker build -t nexus.teamdigitale.test/lode:1.0.0 ./lode
-docker push nexus.teamdigitale.test/lode:1.0.0
+docker build -t 10.98.74.120:5000/virtuoso:1.0.0-SNAPSHOT ./virtuoso
+docker push 10.98.74.120:5000/virtuoso:1.0.0-SNAPSHOT
 
-docker build -t nexus.teamdigitale.test/lodview:1.0.0 ./lodview
-docker push nexus.teamdigitale.test/lodview:1.0.0
+docker build -t 10.98.74.120:5000/lode:1.0.0-SNAPSHOT ./lode
+docker push 10.98.74.120:5000/lode:1.0.0-SNAPSHOT
+
+docker build -t 10.98.74.120:5000/lodview:1.0.0-SNAPSHOT ./lodview
+docker push 10.98.74.120:5000/lodview:1.0.0-SNAPSHOT
