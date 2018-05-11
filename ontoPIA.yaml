@@ -8,10 +8,10 @@ spec:
     port: 8890
     targetPort: 8890
     protocol: TCP
-  # - name: lode
-  #   port: 9090
-  #   targetPort: 8080
-  #   protocol: TCP
+  - name: lode
+    port: 9999
+    targetPort: 9999
+    protocol: TCP
   - name: lodview
     port: 8080
     targetPort: 8080
@@ -40,9 +40,9 @@ spec:
           ports:
             - containerPort: 8890
         - name: lode
-          image: nexus.teamdigitale.test/lode:1.0.1-SNAPSHOT
-          # ports:
-          #   - containerPort: 9090
+          image: nexus.teamdigitale.test/lode:1.0.2-SNAPSHOT
+          ports:
+            - containerPort: 9999
           resources:
             requests:
               memory: "2Gi"
