@@ -19,11 +19,14 @@ spec:
   selector:
     app: ontoPia
 ---
-apiVersion: apps/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ontopia-deployment
 spec:
+  selector:
+    matchLabels:
+      app: ontoPia
   replicas: 1
   template:
     metadata:
@@ -32,14 +35,14 @@ spec:
     spec:
       containers:
         - name: virtuoso
-          image: 10.98.74.120:5000/virtuoso:1.0.0-SNAPSHOT
+          image: nexus.daf.teamdigitale.it/virtuoso:1.0.0
           env:
             - name: SPARQL_UPDATE
               value: "true"
           ports:
             - containerPort: 8890
         - name: lode
-          image: 10.98.74.120:5000/lode:1.0.0-SNAPSHOT
+          image: nexus.daf.teamdigitale.it/lode:1.0.0
           ports:
             - containerPort: 9999
           resources:
@@ -48,11 +51,9 @@ spec:
             limits:
               memory: "2Gi"
         - name: lodview
-          image: 10.98.74.120:5000/lodview:1.0.0-SNAPSHOT
+          image: nexus.daf.teamdigitale.it/lodview:1.0.0
           resources:
             requests:
               memory: "2Gi"
             limits:
               memory: "2Gi"
-      imagePullSecrets:
-        - name: regsecret
