@@ -2,7 +2,7 @@
 
 mkdir -p virtuoso/vocabularies
 
-cd virtuoso/vocabularies
+pushd virtuoso/vocabularies
 
 curl -L -H "Accept: text/turtle" https://w3id.org/italia/controlled-vocabulary/classifications-for-accommodation-facilities/accommodation-star-rating > accommodation-star-rating.ttl
 curl -L -H "Accept: text/turtle" https://w3id.org/italia/controlled-vocabulary/classifications-for-accommodation-facilities/accommodation-typology > accommodation-typology.ttl
@@ -23,11 +23,11 @@ curl -L -H "Accept: text/turtle" https://w3id.org/italia/controlled-vocabulary/p
 curl -L -H "Accept: text/turtle" https://w3id.org/italia/controlled-vocabulary/territorial-classification > territorial-classification.ttl
 curl -L -H "Accept: text/turtle" https://w3id.org/italia/controlled-vocabulary/theme-subtheme-mapping > theme-subtheme-mapping.ttl
 
-cd -
+popd
 
 mkdir -p virtuoso/ontologies
 
-cd virtuoso/ontologies
+pushd virtuoso/ontologies
 
 curl -L -H "Accept: text/turtle" https://w3id.org/italia/onto/ACCO > acco.ttl
 curl -L -H "Accept: text/turtle" https://w3id.org/italia/onto/CLV > clv.ttl
@@ -45,4 +45,4 @@ curl -L -H "Accept: text/turtle" https://w3id.org/italia/onto/RO > ro.ttl
 curl -L -H "Accept: text/turtle" https://w3id.org/italia/onto/SM > sm.ttl
 curl -L -H "Accept: text/turtle" https://w3id.org/italia/onto/TI > ti.ttl
 
-cd -
+popd
