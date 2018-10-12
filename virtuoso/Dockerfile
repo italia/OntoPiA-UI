@@ -69,7 +69,7 @@ RUN apt-get install -y curl \
   && curl -L -H "Accept: text/turtle" https://w3id.org/italia/onto/PublicContract > publiccontract.ttl \
   && curl -L -H "Accept: text/turtle" https://w3id.org/italia/onto/Route > route.ttl \
   && curl -L -H "Accept: text/turtle" https://w3id.org/italia/onto/AtlasOfPaths > aop.ttl \
-  && curl -L -H "Accept: text/turtle" https://w3id.org/italia/onto/Arco > arco.ttl 
+  && curl -L -H "Accept: text/turtle" https://w3id.org/italia/onto/CulturalHeritage > culturalheritage.ttl 
 
 VOLUME /data
 WORKDIR /data
