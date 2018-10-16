@@ -1,10 +1,10 @@
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *      
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * Copyright (c) 2010-2013, Silvio Peroni <essepuntato@gmail.com>
- * 
+ *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
  * copyright notice and this permission notice appear in all copies.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
  * WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
  * MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
@@ -97,358 +97,363 @@ import com.clarkparsia.pellet.owlapiv3.PelletReasonerFactory;
  * Servlet implementation class LodeServlet
  */
 public class LodeServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-	private String xsltURL = "http://lode.sourceforge.net/xslt";
-	private String cssLocation = "http://lode.sourceforge.net/css/";
-	private int maxTentative = 3;
+        private static final long serialVersionUID = 1L;
+        private String xsltURL = "http://lode.sourceforge.net/xslt";
+        private String cssLocation = "http://lode.sourceforge.net/css/";
+        private int maxTentative = 3;
 
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
-	public LodeServlet() {
-		super();
-	}
+        /**
+         * @see HttpServlet#HttpServlet()
+         */
+        public LodeServlet() {
+                super();
+}
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.setContentType("text/html");
+        /**
+         * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+         *      response)
+         */
+        protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+                response.setContentType("text/html");
 
-		resolvePaths(request); /* Used instead of the SourceForge repo */
-		response.setCharacterEncoding("UTF-8");
-		PrintWriter out = response.getWriter();
+                resolvePaths(request); /* Used instead of the SourceForge repo */
+                response.setCharacterEncoding("UTF-8");
+                PrintWriter out = response.getWriter();
 
-		SourceExtractor extractor = new SourceExtractor();
-		extractor.addMimeTypes(MimeType.mimeTypes);
+                SourceExtractor extractor = new SourceExtractor();
+                extractor.addMimeTypes(MimeType.mimeTypes);
 
-		for (int i = 0; i < maxTentative; i++) {
-			try {
-				String stringURL = request.getParameter("url");
+                for (int i = 0; i < maxTentative; i++) {
+                        try {
+                                String stringURL = request.getParameter("url");
 
-				URL ontologyURL = new URL(stringURL);
-				HttpURLConnection.setFollowRedirects(true);
+                                URL ontologyURL = new URL(stringURL);
+                                HttpURLConnection.setFollowRedirects(true);
 
-				String content = "";
+                                String content = "";
 
-				boolean useOWLAPI = new Boolean(request.getParameter("owlapi"));
-				boolean considerImportedOntologies = new Boolean(request.getParameter("imported"));
-				boolean considerImportedClosure = new Boolean(request.getParameter("closure"));
-				boolean useReasoner = new Boolean(request.getParameter("reasoner"));
+                                boolean useOWLAPI = new Boolean(request.getParameter("owlapi"));
+                                boolean considerImportedOntologies = new Boolean(request.getParameter("imported"));
+                                boolean considerImportedClosure = new Boolean(request.getParameter("closure"));
+                                boolean useReasoner = new Boolean(request.getParameter("reasoner"));
 
-				if (considerImportedOntologies || considerImportedClosure || useReasoner) {
-					useOWLAPI = true;
-				}
+                                if (considerImportedOntologies || considerImportedClosure || useReasoner) {
+                                        useOWLAPI = true;
+                                }
 
-				String lang = request.getParameter("lang");
-				if (lang == null) {
-					lang = "en";
-				}
+                                String lang = request.getParameter("lang");
+                                if (lang == null) {
+                                        lang = "en";
+                                }
 
-				if (useOWLAPI) {
-					content = parseWithOWLAPI(ontologyURL, useOWLAPI, considerImportedOntologies, considerImportedClosure, useReasoner);
-				} else {
-					content = extractor.exec(ontologyURL);
-				}
+                                if (useOWLAPI) {
+                                        content = parseWithOWLAPI(ontologyURL, useOWLAPI, considerImportedOntologies, considerImportedClosure, useReasoner);
+                                } else {
+                                        content = extractor.exec(ontologyURL);
+                                }
 
-				/*
-				 * As it was before the new OWLAPI content =
-				 * extractor.exec(ontologyURL); if (useOWLAPI) { content =
-				 * parseWithOWLAPI(content, useOWLAPI,
-				 * considerImportedOntologies, considerImportedClosure,
-				 * useReasoner); }
-				 */
+                                /*
+                                 * As it was before the new OWLAPI content =
+                                 * extractor.exec(ontologyURL); if (useOWLAPI) { content =
+                                 * parseWithOWLAPI(content, useOWLAPI,
+                                 * considerImportedOntologies, considerImportedClosure,
+                                 * useReasoner); }
+                                 */
 
-				content = applyXSLTTransformation(content, stringURL, lang);
+                                content = applyXSLTTransformation(content, stringURL, lang);
 
-				out.println(content);
-				i = maxTentative;
-			} catch (Exception e) {
-				if (i + 1 == maxTentative) {
-					out.println(getErrorPage(e));
-				}
-			}
-		}
-	}
+                                out.println(content);
+                                i = maxTentative;
+                        } catch (Exception e) {
+                                if (i + 1 == maxTentative) {
+                                        out.println(getErrorPage(e));
+                                }
+                        }
+                }
+        }
 
-	private void resolvePaths(HttpServletRequest request) {
-		xsltURL = getServletContext().getRealPath("extraction.xsl");
-		String requestURL = request.getRequestURL().toString();
-		int index = requestURL.lastIndexOf("/");
-		cssLocation = requestURL.substring(0, index) + File.separator;
-	}
+        private void resolvePaths(HttpServletRequest request) {
+                xsltURL = getServletContext().getRealPath("extraction.xsl");
+                String requestURL = request.getRequestURL().toString();
+                int start = requestURL.indexOf(":");
+                int index = requestURL.lastIndexOf("/");
+                String protocol = request.getProtocol();
+                protocol = protocol.substring(0, protocol.indexOf("/")).toLowerCase();
+                cssLocation = "https" + requestURL.substring(start, index) + File.separator;
+                System.out.println(cssLocation);
 
-	/*
-	 * Old version of the method (before upgrading OWLAPI) private String
-	 * parseWithOWLAPI( String content, boolean useOWLAPI, boolean
-	 * considerImportedOntologies, boolean considerImportedClosure, boolean
-	 * useReasoner) throws OWLOntologyCreationException,
-	 * OWLOntologyStorageException, URISyntaxException { String result =
-	 * content;
-	 * 
-	 * if (useOWLAPI) {
-	 * 
-	 * List<String> removed = new ArrayList<String>(); if
-	 * (!considerImportedClosure && !considerImportedOntologies) { result =
-	 * removeImportedAxioms(result, removed); }
-	 * 
-	 * 
-	 * OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
-	 * 
-	 * OWLOntology ontology = manager.loadOntologyFromOntologyDocument( new
-	 * StringDocumentSource(result));
-	 * 
-	 * if (considerImportedClosure || considerImportedOntologies) {
-	 * Set<OWLOntology> setOfImportedOntologies = new HashSet<OWLOntology>(); if
-	 * (considerImportedOntologies) {
-	 * setOfImportedOntologies.addAll(ontology.getDirectImports()); } else {
-	 * setOfImportedOntologies.addAll(ontology.getImportsClosure()); } for
-	 * (OWLOntology importedOntology : setOfImportedOntologies) {
-	 * manager.addAxioms(ontology, importedOntology.getAxioms()); } }
-	 * 
-	 * if (useReasoner) { ontology = parseWithReasoner(manager, ontology); }
-	 * 
-	 * StringDocumentTarget parsedOntology = new StringDocumentTarget();
-	 * 
-	 * manager.saveOntology(ontology, new RDFXMLOntologyFormat(),
-	 * parsedOntology); result = parsedOntology.toString();
-	 * 
-	 * if (!removed.isEmpty() && !considerImportedClosure &&
-	 * !considerImportedOntologies) { result = addImportedAxioms(result,
-	 * removed); } }
-	 * 
-	 * return result; }
-	 */
+        }
 
-	private String parseWithOWLAPI(URL ontologyURL, boolean useOWLAPI, boolean considerImportedOntologies, boolean considerImportedClosure, boolean useReasoner) throws OWLOntologyCreationException, OWLOntologyStorageException, URISyntaxException {
-		String result = "";
+        /*
+         * Old version of the method (before upgrading OWLAPI) private String
+         * parseWithOWLAPI( String content, boolean useOWLAPI, boolean
+         * considerImportedOntologies, boolean considerImportedClosure, boolean
+         * useReasoner) throws OWLOntologyCreationException,
+         * OWLOntologyStorageException, URISyntaxException { String result =
+         * content;
+         *
+         * if (useOWLAPI) {
+         *
+         * List<String> removed = new ArrayList<String>(); if
+         * (!considerImportedClosure && !considerImportedOntologies) { result =
+         * removeImportedAxioms(result, removed); }
+         *
+         *
+         * OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
+         *
+         * OWLOntology ontology = manager.loadOntologyFromOntologyDocument( new
+         * StringDocumentSource(result));
+         *
+         * if (considerImportedClosure || considerImportedOntologies) {
+         * Set<OWLOntology> setOfImportedOntologies = new HashSet<OWLOntology>(); if
+         * (considerImportedOntologies) {
+         * setOfImportedOntologies.addAll(ontology.getDirectImports()); } else {
+         * setOfImportedOntologies.addAll(ontology.getImportsClosure()); } for
+         * (OWLOntology importedOntology : setOfImportedOntologies) {
+         * manager.addAxioms(ontology, importedOntology.getAxioms()); } }
+         *
+         * if (useReasoner) { ontology = parseWithReasoner(manager, ontology); }
+         *
+         * StringDocumentTarget parsedOntology = new StringDocumentTarget();
+         *
+         * manager.saveOntology(ontology, new RDFXMLOntologyFormat(),
+         * parsedOntology); result = parsedOntology.toString();
+         *
+         * if (!removed.isEmpty() && !considerImportedClosure &&
+         * !considerImportedOntologies) { result = addImportedAxioms(result,
+         * removed); } }
+         *
+         * return result; }
+         */
 
-		if (useOWLAPI) {
-			OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
-			
-			OWLOntology ontology = null;
+        private String parseWithOWLAPI(URL ontologyURL, boolean useOWLAPI, boolean considerImportedOntologies, boolean considerImportedClosure, boolean useReasoner) throws OWLOntologyCreationException, OWLOntologyStorageException, URISyntaxException {
+                String result = "";
 
-			if (considerImportedClosure || considerImportedOntologies) {
-				ontology = manager.loadOntology(IRI.create(ontologyURL.toString()));
-				Set<OWLOntology> setOfImportedOntologies = new HashSet<OWLOntology>();
-				if (considerImportedOntologies) {
-					setOfImportedOntologies.addAll(ontology.getDirectImports());
-				} else {
-					setOfImportedOntologies.addAll(ontology.getImportsClosure());
-				}
-				for (OWLOntology importedOntology : setOfImportedOntologies) {
-					manager.addAxioms(ontology, importedOntology.getAxioms());
-				}
-			} else {
-				manager.setSilentMissingImportsHandling(true);
-				ontology = manager.loadOntology(IRI.create(ontologyURL.toString()));
-			}
+                if (useOWLAPI) {
+                        OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
 
-			if (useReasoner) {
-				ontology = parseWithReasoner(manager, ontology);
-			}
+                        OWLOntology ontology = null;
 
-			StringDocumentTarget parsedOntology = new StringDocumentTarget();
+                        if (considerImportedClosure || considerImportedOntologies) {
+                                ontology = manager.loadOntology(IRI.create(ontologyURL.toString()));
+                                Set<OWLOntology> setOfImportedOntologies = new HashSet<OWLOntology>();
+                                if (considerImportedOntologies) {
+                                        setOfImportedOntologies.addAll(ontology.getDirectImports());
+                                } else {
+                                        setOfImportedOntologies.addAll(ontology.getImportsClosure());
+                                }
+                                for (OWLOntology importedOntology : setOfImportedOntologies) {
+                                        manager.addAxioms(ontology, importedOntology.getAxioms());
+                                }
+                        } else {
+                                manager.setSilentMissingImportsHandling(true);
+                                ontology = manager.loadOntology(IRI.create(ontologyURL.toString()));
+                        }
 
-			manager.saveOntology(ontology, new RDFXMLOntologyFormat(), parsedOntology);
-			result = parsedOntology.toString();
-		}
+                        if (useReasoner) {
+                                ontology = parseWithReasoner(manager, ontology);
+                        }
 
-		return result;
-	}
+                        StringDocumentTarget parsedOntology = new StringDocumentTarget();
 
-	private String addImportedAxioms(String result, List<String> removed) {
-		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-		factory.setNamespaceAware(true);
-		try {
-			DocumentBuilder builder = factory.newDocumentBuilder();
-			Document document = builder.parse(new ByteArrayInputStream(result.getBytes()));
+                        manager.saveOntology(ontology, new RDFXMLOntologyFormat(), parsedOntology);
+                        result = parsedOntology.toString();
+                }
 
-			NodeList ontologies = document.getElementsByTagNameNS("http://www.w3.org/2002/07/owl#", "Ontology");
-			if (ontologies.getLength() > 0) {
-				Element ontology = (Element) ontologies.item(0);
+                return result;
+        }
 
-				for (String toBeAdded : removed) {
-					Element importElement = document.createElementNS("http://www.w3.org/2002/07/owl#", "owl:imports");
-					importElement.setAttributeNS("http://www.w3.org/1999/02/22-rdf-syntax-ns#", "rdf:resource", toBeAdded);
-					ontology.appendChild(importElement);
-				}
-			}
+        private String addImportedAxioms(String result, List<String> removed) {
+                DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+                factory.setNamespaceAware(true);
+                try {
+                        DocumentBuilder builder = factory.newDocumentBuilder();
+                        Document document = builder.parse(new ByteArrayInputStream(result.getBytes()));
 
-			Transformer transformer = TransformerFactory.newInstance().newTransformer();
-			StreamResult output = new StreamResult(new StringWriter());
-			DOMSource source = new DOMSource(document);
-			transformer.transform(source, output);
+                        NodeList ontologies = document.getElementsByTagNameNS("http://www.w3.org/2002/07/owl#", "Ontology");
+                        if (ontologies.getLength() > 0) {
+                                Element ontology = (Element) ontologies.item(0);
 
-			return output.getWriter().toString();
-		} catch (ParserConfigurationException e) {
-			return result;
-		} catch (SAXException e) {
-			return result;
-		} catch (IOException e) {
-			return result;
-		} catch (TransformerConfigurationException e) {
-			return result;
-		} catch (TransformerFactoryConfigurationError e) {
-			return result;
-		} catch (TransformerException e) {
-			return result;
-		}
-	}
+                                for (String toBeAdded : removed) {
+                                        Element importElement = document.createElementNS("http://www.w3.org/2002/07/owl#", "owl:imports");
+                                        importElement.setAttributeNS("http://www.w3.org/1999/02/22-rdf-syntax-ns#", "rdf:resource", toBeAdded);
+                                        ontology.appendChild(importElement);
+                                }
+                        }
 
-	/*
-	 * private String removeImportedAxioms(String result, List<String>
-	 * removedImport) { DocumentBuilderFactory factory =
-	 * DocumentBuilderFactory.newInstance(); factory.setNamespaceAware(true);
-	 * try { DocumentBuilder builder = factory.newDocumentBuilder(); Document
-	 * document = builder.parse(new ByteArrayInputStream(result.getBytes()));
-	 * 
-	 * NodeList ontologies =
-	 * document.getElementsByTagNameNS("http://www.w3.org/2002/07/owl#",
-	 * "Ontology"); for (int i = 0; i < ontologies.getLength() ; i++) { Element
-	 * ontology = (Element) ontologies.item(i);
-	 * 
-	 * NodeList children = ontology.getChildNodes(); List<Element> removed = new
-	 * ArrayList<Element>(); for (int j = 0; j < children.getLength(); j++) {
-	 * Node child = children.item(j);
-	 * 
-	 * if ( child.getNodeType() == Node.ELEMENT_NODE &&
-	 * child.getNamespaceURI().equals("http://www.w3.org/2002/07/owl#") &&
-	 * child.getLocalName().equals("imports")) { removed.add((Element) child); }
-	 * }
-	 * 
-	 * for (Element toBeRemoved : removed) {
-	 * removedImport.add(toBeRemoved.getAttributeNS(
-	 * "http://www.w3.org/1999/02/22-rdf-syntax-ns#", "resource"));
-	 * ontology.removeChild(toBeRemoved); } }
-	 * 
-	 * Transformer transformer =
-	 * TransformerFactory.newInstance().newTransformer(); StreamResult output =
-	 * new StreamResult(new StringWriter()); DOMSource source = new
-	 * DOMSource(document); transformer.transform(source, output);
-	 * 
-	 * return output.getWriter().toString(); } catch
-	 * (ParserConfigurationException e) { return result; } catch (SAXException
-	 * e) { return result; } catch (IOException e) { return result; } catch
-	 * (TransformerConfigurationException e) { return result; } catch
-	 * (TransformerFactoryConfigurationError e) { return result; } catch
-	 * (TransformerException e) { return result; } }
-	 */
+                        Transformer transformer = TransformerFactory.newInstance().newTransformer();
+                        StreamResult output = new StreamResult(new StringWriter());
+                        DOMSource source = new DOMSource(document);
+                        transformer.transform(source, output);
 
-	private OWLOntology parseWithReasoner(OWLOntologyManager manager, OWLOntology ontology) {
-		try {
-			PelletOptions.load(new URL("http://" + cssLocation + "pellet.properties"));
-			PelletReasoner reasoner = PelletReasonerFactory.getInstance().createReasoner(ontology);
-			reasoner.getKB().prepare();
-			List<InferredAxiomGenerator<? extends OWLAxiom>> generators = new ArrayList<InferredAxiomGenerator<? extends OWLAxiom>>();
-			generators.add(new InferredSubClassAxiomGenerator());
-			generators.add(new InferredClassAssertionAxiomGenerator());
-			generators.add(new InferredDisjointClassesAxiomGenerator());
-			generators.add(new InferredEquivalentClassAxiomGenerator());
-			generators.add(new InferredEquivalentDataPropertiesAxiomGenerator());
-			generators.add(new InferredEquivalentObjectPropertyAxiomGenerator());
-			generators.add(new InferredInverseObjectPropertiesAxiomGenerator());
-			generators.add(new InferredPropertyAssertionGenerator());
-			generators.add(new InferredSubDataPropertyAxiomGenerator());
-			generators.add(new InferredSubObjectPropertyAxiomGenerator());
+                        return output.getWriter().toString();
+                } catch (ParserConfigurationException e) {
+                        return result;
+                } catch (SAXException e) {
+                        return result;
+                } catch (IOException e) {
+                        return result;
+                } catch (TransformerConfigurationException e) {
+                        return result;
+                } catch (TransformerFactoryConfigurationError e) {
+                        return result;
+                } catch (TransformerException e) {
+                        return result;
+                }
+        }
 
-			InferredOntologyGenerator iog = new InferredOntologyGenerator(reasoner, generators);
+        /*
+         * private String removeImportedAxioms(String result, List<String>
+         * removedImport) { DocumentBuilderFactory factory =
+         * DocumentBuilderFactory.newInstance(); factory.setNamespaceAware(true);
+         * try { DocumentBuilder builder = factory.newDocumentBuilder(); Document
+         * document = builder.parse(new ByteArrayInputStream(result.getBytes()));
+         *
+         * NodeList ontologies =
+         * document.getElementsByTagNameNS("http://www.w3.org/2002/07/owl#",
+         * "Ontology"); for (int i = 0; i < ontologies.getLength() ; i++) { Element
+         * ontology = (Element) ontologies.item(i);
+         *
+         * NodeList children = ontology.getChildNodes(); List<Element> removed = new
+         * ArrayList<Element>(); for (int j = 0; j < children.getLength(); j++) {
+         * Node child = children.item(j);
+         *
+         * if ( child.getNodeType() == Node.ELEMENT_NODE &&
+         * child.getNamespaceURI().equals("http://www.w3.org/2002/07/owl#") &&
+         * child.getLocalName().equals("imports")) { removed.add((Element) child); }
+         * }
+         *
+         * for (Element toBeRemoved : removed) {
+         * removedImport.add(toBeRemoved.getAttributeNS(
+         * "http://www.w3.org/1999/02/22-rdf-syntax-ns#", "resource"));
+         * ontology.removeChild(toBeRemoved); } }
+         *
+         * Transformer transformer =
+         * TransformerFactory.newInstance().newTransformer(); StreamResult output =
+         * new StreamResult(new StringWriter()); DOMSource source = new
+         * DOMSource(document); transformer.transform(source, output);
+         *
+         * return output.getWriter().toString(); } catch
+         * (ParserConfigurationException e) { return result; } catch (SAXException
+         * e) { return result; } catch (IOException e) { return result; } catch
+         * (TransformerConfigurationException e) { return result; } catch
+         * (TransformerFactoryConfigurationError e) { return result; } catch
+         * (TransformerException e) { return result; } }
+         */
 
-			OWLOntologyID id = ontology.getOntologyID();
-			Set<OWLImportsDeclaration> declarations = ontology.getImportsDeclarations();
-			Set<OWLAnnotation> annotations = ontology.getAnnotations();
+        private OWLOntology parseWithReasoner(OWLOntologyManager manager, OWLOntology ontology) {
+                try {
+                        PelletOptions.load(new URL("http://" + cssLocation + "pellet.properties"));
+                        PelletReasoner reasoner = PelletReasonerFactory.getInstance().createReasoner(ontology);
+                        reasoner.getKB().prepare();
+                        List<InferredAxiomGenerator<? extends OWLAxiom>> generators = new ArrayList<InferredAxiomGenerator<? extends OWLAxiom>>();
+                        generators.add(new InferredSubClassAxiomGenerator());
+                        generators.add(new InferredClassAssertionAxiomGenerator());
+                        generators.add(new InferredDisjointClassesAxiomGenerator());
+                        generators.add(new InferredEquivalentClassAxiomGenerator());
+                        generators.add(new InferredEquivalentDataPropertiesAxiomGenerator());
+                        generators.add(new InferredEquivalentObjectPropertyAxiomGenerator());
+                        generators.add(new InferredInverseObjectPropertiesAxiomGenerator());
+                        generators.add(new InferredPropertyAssertionGenerator());
+                        generators.add(new InferredSubDataPropertyAxiomGenerator());
+                        generators.add(new InferredSubObjectPropertyAxiomGenerator());
 
-			Map<OWLEntity, Set<OWLAnnotationAssertionAxiom>> entityAnnotations = new HashMap<OWLEntity, Set<OWLAnnotationAssertionAxiom>>();
-			for (OWLClass aEntity : ontology.getClassesInSignature()) {
-				entityAnnotations.put(aEntity, aEntity.getAnnotationAssertionAxioms(ontology));
-			}
-			for (OWLObjectProperty aEntity : ontology.getObjectPropertiesInSignature()) {
-				entityAnnotations.put(aEntity, aEntity.getAnnotationAssertionAxioms(ontology));
-			}
-			for (OWLDataProperty aEntity : ontology.getDataPropertiesInSignature()) {
-				entityAnnotations.put(aEntity, aEntity.getAnnotationAssertionAxioms(ontology));
-			}
-			for (OWLNamedIndividual aEntity : ontology.getIndividualsInSignature()) {
-				entityAnnotations.put(aEntity, aEntity.getAnnotationAssertionAxioms(ontology));
-			}
-			for (OWLAnnotationProperty aEntity : ontology.getAnnotationPropertiesInSignature()) {
-				entityAnnotations.put(aEntity, aEntity.getAnnotationAssertionAxioms(ontology));
-			}
-			for (OWLDatatype aEntity : ontology.getDatatypesInSignature()) {
-				entityAnnotations.put(aEntity, aEntity.getAnnotationAssertionAxioms(ontology));
-			}
+                        InferredOntologyGenerator iog = new InferredOntologyGenerator(reasoner, generators);
 
-			manager.removeOntology(ontology);
-			OWLOntology inferred = manager.createOntology(id);
-			iog.fillOntology(manager, inferred);
+                        OWLOntologyID id = ontology.getOntologyID();
+                        Set<OWLImportsDeclaration> declarations = ontology.getImportsDeclarations();
+                        Set<OWLAnnotation> annotations = ontology.getAnnotations();
 
-			for (OWLImportsDeclaration decl : declarations) {
-				manager.applyChange(new AddImport(inferred, decl));
-			}
-			for (OWLAnnotation ann : annotations) {
-				manager.applyChange(new AddOntologyAnnotation(inferred, ann));
-			}
-			for (OWLClass aEntity : inferred.getClassesInSignature()) {
-				applyAnnotations(aEntity, entityAnnotations, manager, inferred);
-			}
-			for (OWLObjectProperty aEntity : inferred.getObjectPropertiesInSignature()) {
-				applyAnnotations(aEntity, entityAnnotations, manager, inferred);
-			}
-			for (OWLDataProperty aEntity : inferred.getDataPropertiesInSignature()) {
-				applyAnnotations(aEntity, entityAnnotations, manager, inferred);
-			}
-			for (OWLNamedIndividual aEntity : inferred.getIndividualsInSignature()) {
-				applyAnnotations(aEntity, entityAnnotations, manager, inferred);
-			}
-			for (OWLAnnotationProperty aEntity : inferred.getAnnotationPropertiesInSignature()) {
-				applyAnnotations(aEntity, entityAnnotations, manager, inferred);
-			}
-			for (OWLDatatype aEntity : inferred.getDatatypesInSignature()) {
-				applyAnnotations(aEntity, entityAnnotations, manager, inferred);
-			}
+                        Map<OWLEntity, Set<OWLAnnotationAssertionAxiom>> entityAnnotations = new HashMap<OWLEntity, Set<OWLAnnotationAssertionAxiom>>();
+                        for (OWLClass aEntity : ontology.getClassesInSignature()) {
+                                entityAnnotations.put(aEntity, aEntity.getAnnotationAssertionAxioms(ontology));
+                        }
+                        for (OWLObjectProperty aEntity : ontology.getObjectPropertiesInSignature()) {
+                                entityAnnotations.put(aEntity, aEntity.getAnnotationAssertionAxioms(ontology));
+                        }
+                        for (OWLDataProperty aEntity : ontology.getDataPropertiesInSignature()) {
+                                entityAnnotations.put(aEntity, aEntity.getAnnotationAssertionAxioms(ontology));
+                        }
+                        for (OWLNamedIndividual aEntity : ontology.getIndividualsInSignature()) {
+                                entityAnnotations.put(aEntity, aEntity.getAnnotationAssertionAxioms(ontology));
+                        }
+                        for (OWLAnnotationProperty aEntity : ontology.getAnnotationPropertiesInSignature()) {
+                                entityAnnotations.put(aEntity, aEntity.getAnnotationAssertionAxioms(ontology));
+                        }
+                        for (OWLDatatype aEntity : ontology.getDatatypesInSignature()) {
+                                entityAnnotations.put(aEntity, aEntity.getAnnotationAssertionAxioms(ontology));
+                        }
 
-			return inferred;
-		} catch (FileNotFoundException e1) {
-			return ontology;
-		} catch (MalformedURLException e1) {
-			return ontology;
-		} catch (IOException e1) {
-			return ontology;
-		} catch (OWLOntologyCreationException e) {
-			return ontology;
-		}
-	}
+                        manager.removeOntology(ontology);
+                        OWLOntology inferred = manager.createOntology(id);
+                        iog.fillOntology(manager, inferred);
 
-	private void applyAnnotations(OWLEntity aEntity, Map<OWLEntity, Set<OWLAnnotationAssertionAxiom>> entityAnnotations, OWLOntologyManager manager, OWLOntology ontology) {
-		Set<OWLAnnotationAssertionAxiom> entitySet = entityAnnotations.get(aEntity);
-		if (entitySet != null) {
-			for (OWLAnnotationAssertionAxiom ann : entitySet) {
-				manager.addAxiom(ontology, ann);
-			}
-		}
-	}
+                        for (OWLImportsDeclaration decl : declarations) {
+                                manager.applyChange(new AddImport(inferred, decl));
+                        }
+                        for (OWLAnnotation ann : annotations) {
+                                manager.applyChange(new AddOntologyAnnotation(inferred, ann));
+                        }
+                        for (OWLClass aEntity : inferred.getClassesInSignature()) {
+                                applyAnnotations(aEntity, entityAnnotations, manager, inferred);
+                        }
+                        for (OWLObjectProperty aEntity : inferred.getObjectPropertiesInSignature()) {
+                                applyAnnotations(aEntity, entityAnnotations, manager, inferred);
+                        }
+                        for (OWLDataProperty aEntity : inferred.getDataPropertiesInSignature()) {
+                                applyAnnotations(aEntity, entityAnnotations, manager, inferred);
+                        }
+                        for (OWLNamedIndividual aEntity : inferred.getIndividualsInSignature()) {
+                                applyAnnotations(aEntity, entityAnnotations, manager, inferred);
+                        }
+                        for (OWLAnnotationProperty aEntity : inferred.getAnnotationPropertiesInSignature()) {
+                                applyAnnotations(aEntity, entityAnnotations, manager, inferred);
+                        }
+                        for (OWLDatatype aEntity : inferred.getDatatypesInSignature()) {
+                                applyAnnotations(aEntity, entityAnnotations, manager, inferred);
+                        }
 
-	private String getErrorPage(Exception e) {
-		return "<html>" + "<head><title>LODE error</title></head>" + "<body>" + "<h2>" + "LODE error" + "</h2>" + "<p><strong>Reason: </strong>" + e.getMessage() + "</p>" + "</body>" + "</html>";
-	}
+                        return inferred;
+                } catch (FileNotFoundException e1) {
+                        return ontology;
+                } catch (MalformedURLException e1) {
+                        return ontology;
+                } catch (IOException e1) {
+                        return ontology;
+                } catch (OWLOntologyCreationException e) {
+                        return ontology;
+                }
+        }
 
-	private String applyXSLTTransformation(String source, String ontologyUrl, String lang) throws TransformerException {
-		TransformerFactory tfactory = new net.sf.saxon.TransformerFactoryImpl();
+        private void applyAnnotations(OWLEntity aEntity, Map<OWLEntity, Set<OWLAnnotationAssertionAxiom>> entityAnnotations, OWLOntologyManager manager, OWLOntology ontology) {
+                Set<OWLAnnotationAssertionAxiom> entitySet = entityAnnotations.get(aEntity);
+                if (entitySet != null) {
+                        for (OWLAnnotationAssertionAxiom ann : entitySet) {
+                                manager.addAxiom(ontology, ann);
+                        }
+                }
+        }
 
-		ByteArrayOutputStream output = new ByteArrayOutputStream();
+        private String getErrorPage(Exception e) {
+                return "<html>" + "<head><title>LODE error</title></head>" + "<body>" + "<h2>" + "LODE error" + "</h2>" + "<p><strong>Reason: </strong>" + e.getMessage() + "</p>" + "</body>" + "</html>";
+        }
 
-		Transformer transformer = tfactory.newTransformer(new StreamSource(xsltURL));
+        private String applyXSLTTransformation(String source, String ontologyUrl, String lang) throws TransformerException {
+                TransformerFactory tfactory = new net.sf.saxon.TransformerFactoryImpl();
 
-		transformer.setParameter("css-location", cssLocation);
-		transformer.setParameter("lang", lang);
-		transformer.setParameter("ontology-url", ontologyUrl);
-		transformer.setParameter("source", cssLocation + "source");
+                ByteArrayOutputStream output = new ByteArrayOutputStream();
 
-		StreamSource inputSource = new StreamSource(new StringReader(source));
+                Transformer transformer = tfactory.newTransformer(new StreamSource(xsltURL));
 
-		transformer.transform(inputSource, new StreamResult(output));
+                transformer.setParameter("css-location", cssLocation);
+                transformer.setParameter("lang", lang);
+                transformer.setParameter("ontology-url", ontologyUrl);
+                transformer.setParameter("source", cssLocation + "source");
 
-		return output.toString();
-	}
+                StreamSource inputSource = new StreamSource(new StringReader(source));
+
+                transformer.transform(inputSource, new StreamResult(output));
+
+                return output.toString();
+        }
 }

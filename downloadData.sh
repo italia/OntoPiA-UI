@@ -44,5 +44,9 @@ curl -L -H "Accept: text/turtle" https://w3id.org/italia/onto/POT > pot.ttl
 curl -L -H "Accept: text/turtle" https://w3id.org/italia/onto/RO > ro.ttl
 curl -L -H "Accept: text/turtle" https://w3id.org/italia/onto/SM > sm.ttl
 curl -L -H "Accept: text/turtle" https://w3id.org/italia/onto/TI > ti.ttl
+curl -L -H "Accept: text/turtle" https://w3id.org/italia/onto/AccessCondition > accesscondition.ttl \
+curl -L -H "Accept: text/turtle" https://w3id.org/italia/onto/Language > language.ttl \
+curl -L -H "Accept: text/turtle" https://w3id.org/italia/onto/CPSV > cpsv.ttl \
+curl -L -H "Accept: text/turtle" https://w3id.org/italia/onto/PublicContract > publiccontract.ttl
 
 cd -

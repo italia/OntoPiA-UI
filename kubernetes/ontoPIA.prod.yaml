@@ -19,28 +19,30 @@ spec:
   selector:
     app: ontoPia
 ---
-apiVersion: apps/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ontopia-deployment
 spec:
+  selector:
+    matchLabels:
+      app: ontoPia
   replicas: 1
   template:
     metadata:
       labels:
         app: ontoPia
-        node-type: worker
     spec:
       containers:
         - name: virtuoso
-          image: nexus.teamdigitale.test/virtuoso:1.0.0
+          image: nexus.daf.teamdigitale.it/virtuoso:1.0.0
           env:
             - name: SPARQL_UPDATE
               value: "true"
           ports:
             - containerPort: 8890
         - name: lode
-          image: nexus.teamdigitale.test/lode:1.0.0
+          image: nexus.daf.teamdigitale.it/lode:1.0.0
           ports:
             - containerPort: 9999
           resources:
@@ -49,11 +51,11 @@ spec:
             limits:
               memory: "2Gi"
         - name: lodview
-          image: nexus.teamdigitale.test/lodview:1.0.0
+          image: nexus.daf.teamdigitale.it/lodview:1.0.0
           resources:
             requests:
               memory: "2Gi"
             limits:
               memory: "2Gi"
       nodeSelector:
-        node-type: worker
+        nifi: "false"
