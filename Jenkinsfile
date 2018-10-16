@@ -113,7 +113,7 @@ pipeline {
                 KUBECONFIG = '/var/lib/jenkins/.kube/config.teamdigitale-staging'
             }
             steps {
-                sh 'kubectl --kubeconfig=$KUBECONFIG replace -f kubernetes/ontoPIA.${env.DEPLOY_ENV}.yaml'
+                sh 'kubectl replace -f kubernetes/ontoPIA.${DEPLOY_ENV}.yaml'
                 slackSend (color: '#00FF00', message: "SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}] deployed in '${env.DEPLOY_ENV}' https://cd.daf.teamdigitale.it/blue/organizations/jenkins/daf-srv-storage/activity")
             }
 
@@ -126,7 +126,7 @@ pipeline {
                 KUBECONFIG = '/home/centos/.kube/config.teamdigitale-production'
             }
             steps {
-                sh 'kubectl --kubeconfig=$KUBECONFIG replace -f kubernetes/ontoPIA.${env.DEPLOY_ENV}.yaml'
+                sh 'kubectl replace -f kubernetes/ontoPIA.${DEPLOY_ENV}.yaml'
                 slackSend (color: '#00FF00', message: "SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}] deployed in '${env.DEPLOY_ENV}' https://cd.daf.teamdigitale.it/blue/organizations/jenkins/daf-srv-storage/activity")
             }
         }
