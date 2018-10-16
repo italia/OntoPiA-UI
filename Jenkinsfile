@@ -1,9 +1,8 @@
 pipeline {
   agent none
   environment {
-    NEXUS_TEST = 'nexus.teamdigitale.test/daf-server'
-    NEXUS_PROD = 'nexus.daf.teamdigitale.it/daf-server'
-    KUBECONFIG = '/home/centos/.kube/config.teamdigitale-production'
+    NEXUS_TEST = 'nexus.teamdigitale.test'
+    NEXUS_PROD = 'nexus.daf.teamdigitale.it'
   }
   stages {
     stage('Compile test') {
