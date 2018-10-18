@@ -34,6 +34,7 @@ spec:
       containers:
         - name: virtuoso
           image: nexus.teamdigitale.test/virtuoso:1.0.1-SNAPSHOT
+          imagePullPolicy: Always
           env:
             - name: SPARQL_UPDATE
               value: "true"
@@ -41,6 +42,7 @@ spec:
             - containerPort: 8890
         - name: lode
           image: nexus.teamdigitale.test/lode:1.0.1-SNAPSHOT
+          imagePullPolicy: Always
           ports:
             - containerPort: 9999
           resources:
@@ -50,6 +52,7 @@ spec:
               memory: "2Gi"
         - name: lodview
           image: nexus.teamdigitale.test/lodview:1.0.1-SNAPSHOT
+          imagePullPolicy: Always
           resources:
             requests:
               memory: "2Gi"
