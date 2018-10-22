@@ -40,6 +40,10 @@ spec:
               value: "true"
           ports:
             - containerPort: 8890
+          volumeMounts:
+        - name: glusterfsvol
+          mountPath: /data1
+          subPath: ontopia/virtuoso/data1
         - name: lode
           image: nexus.teamdigitale.test/lode:1.0.1-SNAPSHOT
           imagePullPolicy: Always
@@ -58,5 +62,9 @@ spec:
               memory: "2Gi"
             limits:
               memory: "2Gi"
+      volumes:
+      - name: glusterfsvol
+        persistentVolumeClaim:
+          claimName: gluster-claim
       nodeSelector:
         node-type: worker
