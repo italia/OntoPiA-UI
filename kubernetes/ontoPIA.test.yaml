@@ -33,7 +33,7 @@ spec:
     spec:
       containers:
         - name: virtuoso
-          image: nexus.teamdigitale.test/virtuoso:1.0.2-SNAPSHOT
+          image: nexus.teamdigitale.test/virtuoso:1.0.3-SNAPSHOT
           imagePullPolicy: Always
           env:
             - name: SPARQL_UPDATE
