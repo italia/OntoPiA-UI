@@ -4,7 +4,7 @@ FROM tenforce/virtuoso:1.3.1-virtuoso7.2.2
 ENV PATH /usr/local/virtuoso-opensource/bin/:$PATH
 
 # Add Virtuoso config
-COPY virtuoso.ini /virtuoso.ini
+# COPY virtuoso.ini /virtuoso.ini
 
 # Add dump_nquads_procedure
 COPY dump_nquads_procedure.sql /dump_nquads_procedure.sql

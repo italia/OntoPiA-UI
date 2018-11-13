@@ -33,7 +33,7 @@ spec:
     spec:
       containers:
         - name: virtuoso
-          image: nexus.teamdigitale.test/virtuoso:1.0.1-SNAPSHOT
+          image: nexus.teamdigitale.test/virtuoso:1.0.2-SNAPSHOT
           imagePullPolicy: Always
           env:
             - name: SPARQL_UPDATE
@@ -44,6 +44,8 @@ spec:
           - name: glusterfsvol
             mountPath: /data1
             subPath: ontopia/virtuoso/data1
+        - name: config-volume
+          mountPath: /conf
         - name: lode
           image: nexus.teamdigitale.test/lode:1.0.1-SNAPSHOT
           imagePullPolicy: Always
@@ -66,5 +68,8 @@ spec:
       - name: glusterfsvol
         persistentVolumeClaim:
           claimName: gluster-claim
+      - name: config-volume
+        configMap:
+          name: virtuoso-ini
       nodeSelector:
         node-type: worker

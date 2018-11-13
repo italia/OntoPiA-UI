@@ -16,7 +16,7 @@ mv /clean-logs.sh . 2>/dev/null
 
 original_port=`crudini --get virtuoso.ini HTTPServer ServerPort`
 # NOTE: prevents virtuoso to expose on port 8890 before we actually run
-#		the server
+#               the server
 crudini --set virtuoso.ini HTTPServer ServerPort 27015
 
 if [ ! -f "$SETTINGS_DIR/.config_set" ];
@@ -49,7 +49,7 @@ then
     echo "Start data loading from toLoad folder"
     pwd="dba"
     graph="http://localhost:8890/DAV"
-    
+
     echo "Loaded" > .data_loaded
 
     if [ "$DBA_PASSWORD" ]; then pwd="$DBA_PASSWORD" ; fi
@@ -65,9 +65,9 @@ fi
 
 if [ ! -f ".ontologies_loaded" -a -d "/usr/local/virtuoso-opensource/share/virtuoso/vad/ontologies/" ] ;
 then
-	pwd="dba" ;
-	echo "Loading OntoPiA ontologies." ;
-	echo "ld_dir_all('/usr/local/virtuoso-opensource/share/virtuoso/vad/ontologies/', '*.ttl', 'https://w3id.org/italia/onto');" >> /load_ontologies.sql
+        pwd="dba" ;
+        echo "Loading OntoPiA ontologies." ;
+        echo "ld_dir_all('/usr/local/virtuoso-opensource/share/virtuoso/vad/ontologies/', '*.ttl', 'https://w3id.org/italia/onto');" >> /load_ontologies.sql
     echo "rdf_loader_run();" >> /load_ontologies.sql
     echo "exec('checkpoint');" >> /load_ontologies.sql
     echo "WAIT_FOR_CHILDREN; " >> /load_ontologies.sql
@@ -79,9 +79,9 @@ fi
 
 if [ ! -f ".vocabularies_loaded" -a -d "/usr/local/virtuoso-opensource/share/virtuoso/vad/vocabularies/" ] ;
 then
-	pwd="dba" ;
-	echo "Loading OntoPiA controlled vocabularies." ;
-	echo "ld_dir_all('/usr/local/virtuoso-opensource/share/virtuoso/vad/vocabularies/', '*.ttl', 'https://w3id.org/italia/controlled-vocabulary');" >> /load_vocabularies.sql
+        pwd="dba" ;
+        echo "Loading OntoPiA controlled vocabularies." ;
+        echo "ld_dir_all('/usr/local/virtuoso-opensource/share/virtuoso/vad/vocabularies/', '*.ttl', 'https://w3id.org/italia/controlled-vocabulary');" >> /load_vocabularies.sql
     echo "rdf_loader_run();" >> /load_vocabularies.sql
     echo "exec('checkpoint');" >> /load_vocabularies.sql
     echo "WAIT_FOR_CHILDREN; " >> /load_vocabularies.sql
@@ -94,4 +94,6 @@ fi
 
 crudini --set virtuoso.ini HTTPServer ServerPort ${VIRT_HTTPServer_ServerPort:-$original_port}
 
-exec virtuoso-t +wait +foreground
+# exec virtuoso-t +wait +foreground
+
+exec virtuoso-t +wait +configfile /conf/virtuoso.ini
