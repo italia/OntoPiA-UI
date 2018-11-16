@@ -1,0 +1,75 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ontopia
+spec:
+  ports:
+  - name: virtuoso
+    port: 8890
+    targetPort: 8890
+    protocol: TCP
+  - name: lode
+    port: 9999
+    targetPort: 9999
+    protocol: TCP
+  - name: lodview
+    port: 8080
+    targetPort: 8080
+    protocol: TCP
+  selector:
+    app: ontoPia
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: ontopia-deployment
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: ontoPia
+        node-type: worker
+    spec:
+      containers:
+        - name: virtuoso
+          image: nexus.teamdigitale.test/virtuoso:1.0.3-SNAPSHOT
+          imagePullPolicy: Always
+          env:
+            - name: SPARQL_UPDATE
+              value: "true"
+          ports:
+            - containerPort: 8890
+          volumeMounts:
+          - name: glusterfsvol
+            mountPath: /data1
+            subPath: ontopia/virtuoso/data1
+          - name: config-volume
+            mountPath: /conf
+        - name: lode
+          image: nexus.teamdigitale.test/lode:1.0.1-SNAPSHOT
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 9999
+          resources:
+            requests:
+              memory: "2Gi"
+            limits:
+              memory: "2Gi"
+        - name: lodview
+          image: nexus.teamdigitale.test/lodview:1.0.1-SNAPSHOT
+          imagePullPolicy: Always
+          resources:
+            requests:
+              memory: "2Gi"
+            limits:
+              memory: "2Gi"
+      volumes:
+      - name: glusterfsvol
+        persistentVolumeClaim:
+          claimName: gluster-claim
+      - name: config-volume
+        configMap:
+          name: virtuoso-ini
+      nodeSelector:
+        node-type: worker
