@@ -35,14 +35,20 @@ spec:
     spec:
       containers:
         - name: virtuoso
-          image: nexus.daf.teamdigitale.it/virtuoso:1.0.0
+          image: nexus.daf.teamdigitale.it/virtuoso:1.0.3
           env:
             - name: SPARQL_UPDATE
               value: "true"
           ports:
             - containerPort: 8890
+          volumeMounts:
+          - name: glusterfsvol
+            mountPath: /data1
+            subPath: ontopia/virtuoso/data1
+          - name: config-volume
+            mountPath: /conf
         - name: lode
-          image: nexus.daf.teamdigitale.it/lode:1.0.0
+          image: nexus.daf.teamdigitale.it/lode:1.0.1
           ports:
             - containerPort: 9999
           resources:
@@ -51,11 +57,18 @@ spec:
             limits:
               memory: "2Gi"
         - name: lodview
-          image: nexus.daf.teamdigitale.it/lodview:1.0.0
+          image: nexus.daf.teamdigitale.it/lodview:1.0.1
           resources:
             requests:
               memory: "2Gi"
             limits:
               memory: "2Gi"
+      volumes:
+      - name: glusterfsvol
+        persistentVolumeClaim:
+          claimName: gluster-claim
+      - name: config-volume
+        configMap:
+          name: virtuoso-ini
       nodeSelector:
         nifi: "false"
