@@ -26,6 +26,7 @@ curl -L -H "Accept: text/turtle" https://w3id.org/italia/controlled-vocabulary/t
 curl -L -H "Accept: text/turtle" https://w3id.org/italia/controlled-vocabulary/territorial-classifications/provinces > provinces.ttl
 curl -L -H "Accept: text/turtle" https://w3id.org/italia/controlled-vocabulary/territorial-classifications/regions > regions.ttl
 curl -L -H "Accept: text/turtle" https://w3id.org/italia/controlled-vocabulary/territorial-classifications/provinces/provinces > provinces.ttl
+curl -L -H "Accept: text/turtle" https://w3id.org/italia/controlled-vocabulary/territorial-classifications/geographical-distribution/geographical-distribution.ttl > geographical-distribution.ttl
 curl -L -H "Accept: text/turtle" https://w3id.org/italia/controlled-vocabulary/theme-subtheme-mapping > theme-subtheme-mapping.ttl
 curl -L -H "Accept: text/turtle" https://w3id.org/italia/controlled-vocabulary/classifications-for-routes/route-types > route-types.ttl
 
