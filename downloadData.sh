@@ -23,11 +23,13 @@ curl -L -H "Accept: text/turtle" https://w3id.org/italia/controlled-vocabulary/l
 curl -L -H "Accept: text/turtle" https://w3id.org/italia/controlled-vocabulary/poi-category-classification > poi-category-classification.ttl
 curl -L -H "Accept: text/turtle" https://w3id.org/italia/controlled-vocabulary/public-event-types > public-event-types.ttl
 curl -L -H "Accept: text/turtle" https://w3id.org/italia/controlled-vocabulary/territorial-classifications/countries/italy > italy.ttl
-curl -L -H "Accept: text/turtle" https://w3id.org/italia/controlled-vocabulary/territorial-classifications/provinces > provinces.ttl
 curl -L -H "Accept: text/turtle" https://w3id.org/italia/controlled-vocabulary/territorial-classifications/regions > regions.ttl
-curl -L -H "Accept: text/turtle" https://w3id.org/italia/controlled-vocabulary/territorial-classifications/provinces/provinces > provinces.ttl
+curl -L -H "Accept: text/turtle" https://w3id.org/italia/controlled-vocabulary/territorial-classifications/provinces > provinces.ttl
 curl -L -H "Accept: text/turtle" https://w3id.org/italia/controlled-vocabulary/theme-subtheme-mapping > theme-subtheme-mapping.ttl
 curl -L -H "Accept: text/turtle" https://w3id.org/italia/controlled-vocabulary/classifications-for-routes/route-types > route-types.ttl
+curl -L -H "Accept: text/turtle" https://w3id.org/italia/controlled-vocabulary/classifications-for-transparency/transparency-titulus > transparency-titulus.ttl
+curl -L -H "Accept: text/turtle" https://w3id.org/italia/controlled-vocabulary/classifications-for-universities/documents-titulus > documents-titulus.ttl
+curl -L -H "Accept: text/turtle" https://w3id.org/italia/controlled-vocabulary/classifications-for-universities/academic-disciplines > academic-disciplines.ttl
 
 cd -
 
