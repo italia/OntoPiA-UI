@@ -16,63 +16,71 @@
 @base <https://w3id.org/italia/onto/l0> .
 
 <https://w3id.org/italia/onto/l0> rdf:type owl:Ontology ;
-                                   owl:versionIRI : ;
-                                   admsapit:hasKeyClass :Event ;
-                                   dct:description "This ontology provides the foundational level of the ontological stack of OntoPiA. The name L0 stands for Level-0 ontology as it provides the basic conceptual foundations to the whole stack. This ontology is inspired from DOLCE 0 (http://www.ontologydesignpatterns.org/ont/d0.owl)"@en ;
-                                   admsapit:hasKeyClass :Object ;
+                                   owl:versionIRI <https://w3id.org/italia/onto/l0/0.8> ;
+                                   dct:accrualPeriodicity <http://publications.europa.eu/resource/authority/frequency/IRREG> ;
+                                   dct:creator <http://spcdata.digitpa.gov.it/Amministrazione/agid> ,
+                                               <https://w3id.org/italia/data/organization/support-unit/cnr-Z6HZEH/stlab> ;
+                                   dct:description "Questa è l'ontologia che fornisce il livello fondazionale allo stack ontologico di OntoPiA. Il nome L0 sta per Level-0 ontology poiché essa fornisce le fondamenta concettuali elementari all'intero stack. Questa ontologia è  ispirata da DOLCE zero (http://www.ontologydesignpatterns.org/ont/d0.owl)"@it ,
+                                                   "This ontology provides the foundational level of the ontological stack of OntoPiA. The name L0 stands for Level-0 ontology as it provides the basic conceptual foundations to the whole stack. This ontology is inspired from DOLCE 0 (http://www.ontologydesignpatterns.org/ont/d0.owl)"@en ;
                                    dct:issued "2017-09-29"^^xsd:date ;
-                                   dct:creator <http://spcdata.digitpa.gov.it/Amministrazione/agid> ;
-                                   admsapit:hasKeyClass :Entity ;
-                                   admsapit:target "Cittadini"@it ;
-                                   admsapit:hasTask admsapit:AnnotationTask ,
-                                                    admsapit:QueryFormulationTask ;
-                                   dcat:keyword "Evento"@it ;
-                                   admsapit:hasTask admsapit:SearchTask ;
-                                   dcat:keyword "Entità"@it ,
-                                                "Caratteristica"@it ;
-                                   admsapit:target "Pubbliche Amministrazioni"@it ;
-                                   admsapit:hasOntologyLanguage admsapit:OWL ;
-                                   dct:creator <https://w3id.org/italia/data/organization/support-unit/cnr-Z6HZEH/stlab> ;
-                                   dcat:keyword "Oggetto"@it ;
-                                   admsapit:hasSemanticAssetDistribution <https://w3id.org/italia/data/distribution/l0-RDF-TURTLE> ;
-                                   dct:language <http://publications.europa.eu/resource/authority/language/ENG> ;
-                                   owl:versionInfo "0.6 - 17 October 2018 - modelling of sequencing."@en ;
-                                   admsapit:hasFormalityLevel admsapit:Formal ;
-                                   dct:rightsHolder <http://spcdata.digitpa.gov.it/Amministrazione/agid> ;
-                                   rdfs:label "Top level ontology L0 - Level-0"@en ;
-                                   admsapit:officialURI "https://w3id.org/italia/onto/l0"^^xsd:anyURI ;
-                                   admsapit:hasSemanticAssetDistribution <https://w3id.org/italia/data/distribution/l0-RDF-XML> ,
-                                                                         <https://w3id.org/italia/data/distribution/l0-JSON-LD> ;
-                                   rdfs:comment "This is the top level ontology of OntoPiA"@en ;
-                                   dct:modified "2018-10-17" ;
+                                   dct:language <http://publications.europa.eu/resource/authority/language/ENG> ,
+                                                <http://publications.europa.eu/resource/authority/language/ITA> ;
+                                   dct:modified "2019-04-24"^^xsd:date ;
                                    dct:publisher <http://spcdata.digitpa.gov.it/Amministrazione/agid> ;
-                                   owl:versionInfo "0.6 - 17 Ottobre 2018 - Aggiunta delle sequenze."@it ;
-                                   admsapit:prefix "l0" ;
-                                   admsapit:last : ;
+                                   dct:rightsHolder <http://spcdata.digitpa.gov.it/Amministrazione/agid> ;
+                                   dct:title "Ontologia fondazionale di OntoPiA - Livello 0"@it ,
+                                             "Top level ontology L0 - Level-0"@en ;
+                                   rdfs:comment "Questa è l'ontologia che fornisce il livello fondazionale allo stack ontologico di OntoPiA. Il nome L0 sta per Level-0 ontology poiché essa fornisce le fondamenta concettuali elementari all'intero stack. Questa ontologia è  ispirata da DOLCE zero (http://www.ontologydesignpatterns.org/ont/d0.owl)"@it ,
+                                                "This is the top level ontology of OntoPiA"@en ;
+                                   rdfs:isDefinedBy <https://w3id.org/italia/onto/l0> ;
+                                   rdfs:label "Ontologia fondazionale di OntoPiA - Livello 0"@it ,
+                                              "Top level ontology L0 - Level-0"@en ;
+                                   owl:versionInfo "Version 0.8 - 24 April 2019 - review Topic class, l0:EventOrSituation disjountness axiom."@en ,
+                                                   "Version 0.8- 24 Aprile 2019 - Revisione della classe Topic e dell'assioma di disgiunizone di Evento e Situazione."@it ;
                                    dcat:contactPoint <https://w3id.org/italia/data/contact-point/onto-agid> ;
-                                   admsapit:type admsapit:UpperLevelOntology ;
+                                   dcat:keyword "Caratteristica"@it ,
+                                                "Evento"@it ,
+                                                "Oggetto"@it ;
+                                   dcat:theme <http://publications.europa.eu/resource/authority/data-theme/GOVE> ,
+                                              <http://publications.europa.eu/resource/authority/data-theme/TECH> ;
+                                   prov:wasDerivedFrom <https://w3id.org/italia/onto/l0/0.7> ;
+                                   prov:wasInfluencedBy <http://www.ontologydesignpatterns.org/ont/d0.owl> ;
+                                   admsapit:acronym "l0-AP_IT" ;
+                                   admsapit:hasContributor <https://w3id.org/italia/data/organization/public-organization/td> ;
+                                   admsapit:hasFormalityLevel admsapit:Formal ;
+                                   admsapit:hasKeyClass :Agent ,
+                                                        :Characteristic ,
+                                                        :Entity ,
+                                                        :EventOrSituation ,
+                                                        :Object ;
+                                   admsapit:hasOntologyLanguage admsapit:OWL ;
+                                   admsapit:hasSemanticAssetDistribution <https://w3id.org/italia/data/distribution/l0-JSON-LD> ,
+                                                                         <https://w3id.org/italia/data/distribution/l0-RDF-TURTLE> ,
+                                                                         <https://w3id.org/italia/data/distribution/l0-RDF-XML> ;
+                                   admsapit:hasTask admsapit:AnnotationTask ,
+                                                    admsapit:QueryFormulationTask ,
+                                                    admsapit:SearchTask ;
+                                   admsapit:last <https://w3id.org/italia/onto/l0/0.8> ;
+                                   admsapit:officialURI "https://w3id.org/italia/onto/l0"^^xsd:anyURI ;
+                                   admsapit:prefix "l0" ;
                                    admsapit:semanticAssetInUse <https://w3id.org/italia/data/project/DAF> ,
                                                                <https://w3id.org/italia/data/project/OntoPiA> ;
-                                   dct:title "Ontologia fondazionale di OntoPiA - Livello 0"@it ;
-                                   admsapit:hasKeyClass :Characteristic ;
-                                   dct:accrualPeriodicity <http://publications.europa.eu/resource/authority/frequency/IRREG> ;
-                                   admsapit:acronym "l0-AP_IT" ;
-                                   rdfs:comment "Questa è l'ontologia che fornisce il livello fondazionale allo stack ontologico di OntoPiA. Il nome L0 sta per Level-0 ontology poiché essa fornisce le fondamenta concettuali elementari all'intero stack. Questa ontologia è  ispirata da DOLCE zero (http://www.ontologydesignpatterns.org/ont/d0.owl)"@it ;
-                                   dct:description "Questa è l'ontologia che fornisce il livello fondazionale allo stack ontologico di OntoPiA. Il nome L0 sta per Level-0 ontology poiché essa fornisce le fondamenta concettuali elementari all'intero stack. Questa ontologia è  ispirata da DOLCE zero (http://www.ontologydesignpatterns.org/ont/d0.owl)"@it ;
-                                   prov:wasInfluencedBy <http://www.ontologydesignpatterns.org/ont/d0.owl> ;
-                                   rdfs:isDefinedBy <https://w3id.org/italia/onto/l0> ;
-                                   dcat:theme <http://publications.europa.eu/resource/authority/data-theme/GOVE> ;
-                                   admsapit:hasContributor <https://w3id.org/italia/data/organization/public-organization/td> ;
-                                   dct:title "Top level ontology L0 - Level-0"@en ;
-                                   rdfs:label "Ontologia fondazionale di OntoPiA - Livello 0"@it ;
-                                   dct:language <http://publications.europa.eu/resource/authority/language/ITA> ;
-                                   admsapit:hasKeyClass :Agent ;
-                                   admsapit:target "Imprese"@it ;
-                                   dcat:theme <http://publications.europa.eu/resource/authority/data-theme/TECH> .
+                                   admsapit:target "Cittadini"@it ,
+                                                   "Imprese"@it ,
+                                                   "Pubbliche Amministrazioni"@it ;
+                                   admsapit:type admsapit:UpperLevelOntology .
 
 #################################################################
 #    Annotation properties
 #################################################################
+
+###  http://purl.org/dc/terms/accrualPeriodicity
+dct:accrualPeriodicity rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/creator
+dct:creator rdf:type owl:AnnotationProperty .
+
 
 ###  http://purl.org/dc/terms/description
 dct:description rdf:type owl:AnnotationProperty .
@@ -86,8 +94,28 @@ dct:format rdf:type owl:AnnotationProperty .
 dct:identifier rdf:type owl:AnnotationProperty .
 
 
+###  http://purl.org/dc/terms/issued
+dct:issued rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/language
+dct:language rdf:type owl:AnnotationProperty .
+
+
 ###  http://purl.org/dc/terms/license
 dct:license rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/modified
+dct:modified rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/publisher
+dct:publisher rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/rightsHolder
+dct:rightsHolder rdf:type owl:AnnotationProperty .
 
 
 ###  http://purl.org/dc/terms/title
@@ -106,8 +134,20 @@ vcard:hasEmail rdf:type owl:AnnotationProperty .
 dcat:accessURL rdf:type owl:AnnotationProperty .
 
 
+###  http://www.w3.org/ns/dcat#contactPoint
+dcat:contactPoint rdf:type owl:AnnotationProperty .
+
+
 ###  http://www.w3.org/ns/dcat#downloadURL
 dcat:downloadURL rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/ns/dcat#keyword
+dcat:keyword rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/ns/dcat#theme
+dcat:theme rdf:type owl:AnnotationProperty .
 
 
 ###  http://www.w3.org/ns/prov#wasDerivedFrom
@@ -120,6 +160,58 @@ prov:wasInfluencedBy rdf:type owl:AnnotationProperty .
 
 ###  http://xmlns.com/foaf/0.1/name
 foaf:name rdf:type owl:AnnotationProperty .
+
+
+###  https://w3id.org/italia/onto/ADMS/acronym
+admsapit:acronym rdf:type owl:AnnotationProperty .
+
+
+###  https://w3id.org/italia/onto/ADMS/hasContributor
+admsapit:hasContributor rdf:type owl:AnnotationProperty .
+
+
+###  https://w3id.org/italia/onto/ADMS/hasFormalityLevel
+admsapit:hasFormalityLevel rdf:type owl:AnnotationProperty .
+
+
+###  https://w3id.org/italia/onto/ADMS/hasKeyClass
+admsapit:hasKeyClass rdf:type owl:AnnotationProperty .
+
+
+###  https://w3id.org/italia/onto/ADMS/hasOntologyLanguage
+admsapit:hasOntologyLanguage rdf:type owl:AnnotationProperty .
+
+
+###  https://w3id.org/italia/onto/ADMS/hasSemanticAssetDistribution
+admsapit:hasSemanticAssetDistribution rdf:type owl:AnnotationProperty .
+
+
+###  https://w3id.org/italia/onto/ADMS/hasTask
+admsapit:hasTask rdf:type owl:AnnotationProperty .
+
+
+###  https://w3id.org/italia/onto/ADMS/last
+admsapit:last rdf:type owl:AnnotationProperty .
+
+
+###  https://w3id.org/italia/onto/ADMS/officialURI
+admsapit:officialURI rdf:type owl:AnnotationProperty .
+
+
+###  https://w3id.org/italia/onto/ADMS/prefix
+admsapit:prefix rdf:type owl:AnnotationProperty .
+
+
+###  https://w3id.org/italia/onto/ADMS/semanticAssetInUse
+admsapit:semanticAssetInUse rdf:type owl:AnnotationProperty .
+
+
+###  https://w3id.org/italia/onto/ADMS/target
+admsapit:target rdf:type owl:AnnotationProperty .
+
+
+###  https://w3id.org/italia/onto/ADMS/type
+admsapit:type rdf:type owl:AnnotationProperty .
 
 
 ###  https://w3id.org/italia/onto/l0/controlledVocabulary
@@ -349,29 +441,13 @@ foaf:name rdf:type owl:AnnotationProperty .
 
 
 ###  https://w3id.org/italia/onto/l0/identifier
-:identifier rdf:type owl:DatatypeProperty ;
-            rdfs:domain owl:Thing ;
-            rdfs:range rdfs:Literal ;
-            rdfs:comment "Questa proprietà è utilizzata per rappresentare un generico identificativo associato a cose del dominio modellato. Essa può essere specializzata in una serie di sottoproprietà che rappresentano codici specifii di alcune entità del dominio modellato."@it ,
-                         "This property is used to represent a generic identifier that is asoociated with things of the modelled domain. the property can be speclalized in subproperties that represent identifier so f specific entities of the modelled domain."@en ;
-            rdfs:isDefinedBy <https://w3id.org/italia/onto/l0> ;
-            rdfs:label "generic identifier"@en ,
-                       "identificativo generico"@it ;
-            owl:versionInfo "stabile"@it ,
-                            "stable"@en .
+:identifier rdf:type owl:DatatypeProperty .
 
 
 ###  https://w3id.org/italia/onto/l0/name
 :name rdf:type owl:DatatypeProperty ;
       rdfs:domain owl:Thing ;
-      rdfs:range rdfs:Literal ;
-      rdfs:comment "Any literal that represents the name of a thing."@en ,
-                   "Un letterale che rappresenta il nome di una cosa."@it ;
-      rdfs:isDefinedBy <https://w3id.org/italia/onto/l0> ;
-      rdfs:label "name"@en ,
-                 "nome"@it ;
-      owl:versionInfo "stabile"@it ,
-                      "stable"@en .
+      rdfs:range rdfs:Literal .
 
 
 #################################################################
@@ -425,6 +501,9 @@ admsapit:SemanticAssetDistribution rdf:type owl:Class .
 ###  https://w3id.org/italia/onto/l0/Agent
 :Agent rdf:type owl:Class ;
        rdfs:subClassOf :Object ;
+       owl:disjointWith :Concept ,
+                        :Description ,
+                        :EventOrSituation ;
        rdfs:comment "Any agentive Object , either physical (e.g. a person, a robot, an oak), or social (e.g. a corporation, an institution, a community)."@en ,
                     "Un agente, sia fisico (ex. una persona, un robot, una quercia), o sociale (ex. una società, un'istituzione, una comunità)."@it ;
        rdfs:isDefinedBy <https://w3id.org/italia/onto/l0> ;
@@ -462,6 +541,20 @@ admsapit:SemanticAssetDistribution rdf:type owl:Class .
                             "stable"@en .
 
 
+###  https://w3id.org/italia/onto/l0/Concept
+:Concept rdf:type owl:Class ;
+         rdfs:subClassOf :Object ;
+         owl:disjointWith :Description ,
+                          :EventOrSituation ;
+         rdfs:comment "It is an object that is defined in some description. Once defined it can be used in other descriptions"@en ,
+                      "Un oggetto definito nel contesto di determinate descrizioni. Una volta definito esso può essere utilizzato in altre descrizioni."@it ;
+         rdfs:isDefinedBy <https://w3id.org/italia/onto/l0> ;
+         rdfs:label "Concept"@en ,
+                    "Concetto"@it ;
+         owl:versionInfo "stabile"@it ,
+                         "stable"@en .
+
+
 ###  https://w3id.org/italia/onto/l0/Description
 :Description rdf:type owl:Class ;
              rdfs:subClassOf :Object ,
@@ -469,6 +562,7 @@ admsapit:SemanticAssetDistribution rdf:type owl:Class .
                                owl:onProperty :description ;
                                owl:someValuesFrom rdfs:Literal
                              ] ;
+             owl:disjointWith :EventOrSituation ;
              rdfs:comment """La classe degli oggetti costruiti socialmente (testi, valori, categorie, relazioni, contesti) usati per descrivere qualcos'altro in modo structuratto.
 Gli esempi includono i piani (come descrizioni strutturate di azioni da eseguire ex. in un processo industriale), le diagnosi (come descrizioni strutturate di situazioni osservate ex. clinicamente), le spiegazioni (come testi strutturati per chiarire ex. un concetto in un sistema normativo), osservazioni oggettive (come insiemi di valori strutturati che identificano una situazione rilevante ex. da un sistema di sensori)."""@it ,
                           """The class of socially-created objects (texts, values, categories, relations, contexts) used to describe something else in a structured way.
@@ -491,19 +585,20 @@ Examples include plans (as structured descriptions of actions to be executed), d
                         "stable"@en .
 
 
-###  https://w3id.org/italia/onto/l0/Event
-:Event rdf:type owl:Class ;
-       rdfs:subClassOf :Entity ;
-       owl:disjointWith :Object ;
-       rdfs:comment """Any entity that typically flows in time, either in the physical or social world. Examples include athmospheric phenomena, concerts, travels, institutional processes, etc.
+###  https://w3id.org/italia/onto/l0/EventOrSituation
+:EventOrSituation rdf:type owl:Class ;
+                  rdfs:subClassOf :Entity ;
+                  rdfs:comment """Any entity that typically flows in time, either in the physical or social world  Examples include athmospheric phenomena, concerts, travels, institutional processes, etc.
+It also represents a relational context created by an observer on the basis of a frame'
 Events are opposable to objects, since events typically flow in time, aggregating multiple objects during their flow, while objects tend to be stable in a certain time interval."""@en ,
-                    """Ogni entità che tipicamente scorre nel tempo, sia nel mondo fisico sia sociale. Gli esempi includono fenomeni atmosferici, concerti, viaggi, processi istituzionali, etc.
+                               """Ogni entità che tipicamente scorre nel tempo, sia nel mondo fisico sia sociale. Gli esempi includono fenomeni atmosferici, concerti, viaggi, processi istituzionali, etc.
+La classe rappresenta anche un \"contesto relazionale\" creato da un osservatore sulla base di un \"frame\" (cioè una Descrizione).
 Gli eventi si oppongono agli oggetti, poiché, mentre gli eventi scorrono nel tempo e aggregano uno o più oggetti nel loro scorrerre, gli oggetti tendono a essere stabili in un intervallo di tempo."""@it ;
-       rdfs:isDefinedBy <https://w3id.org/italia/onto/l0> ;
-       rdfs:label "Event"@en ,
-                  "Evento"@it ;
-       owl:versionInfo "stabile"@it ,
-                       "stable"@en .
+                  rdfs:isDefinedBy <https://w3id.org/italia/onto/l0> ;
+                  rdfs:label "Event or Situation"@en ,
+                             "Evento e Situazione"@it ;
+                  owl:versionInfo "stabile"@it ,
+                                  "stable"@en .
 
 
 ###  https://w3id.org/italia/onto/l0/Location
@@ -561,7 +656,7 @@ GLi oggetti si possono contrapporre agli eventi, che invece scorrono nel tempo, 
 
 ###  https://w3id.org/italia/onto/l0/Topic
 :Topic rdf:type owl:Class ;
-       rdfs:subClassOf :Object ;
+       rdfs:subClassOf :Entity ;
        rdfs:comment "La classe che include temi, argomenti, categorie, discipline, etc. Per esempio: la matematica, lo svago, le arti marziali, etc., intesi come temi di un discorso o di una categorizzazione."@it ,
                     "The class of topics, subjects, arguments, categories, domains, etc., intended as topics of a discourse or a categorization."@en ;
        rdfs:isDefinedBy <https://w3id.org/italia/onto/l0> ;
@@ -575,18 +670,17 @@ GLi oggetti si possono contrapporre agli eventi, che invece scorrono nel tempo, 
 #    Individuals
 #################################################################
 
-###  http://spcdata.digitpa.gov.it/browse/page/Amministrazione/agid
-<http://spcdata.digitpa.gov.it/browse/page/Amministrazione/agid> rdf:type owl:NamedIndividual ,
-                                                                          dcatapit:Agent ,
-                                                                          foaf:Agent ;
-                                                                 dct:identifier "agid" ;
-                                                                 foaf:name "Agenzia per l'Italia Digitale"@it ,
-                                                                           "Italian Digital Agency"@en .
+###  http://spcdata.digitpa.gov.it/Amministrazione/agid
+<http://spcdata.digitpa.gov.it/Amministrazione/agid> rdf:type owl:NamedIndividual ,
+                                                              dcatapit:Agent ,
+                                                              foaf:Agent ;
+                                                     dct:identifier "agid" ;
+                                                     foaf:name "Agenzia per l'Italia Digitale"@it ,
+                                                               "Italian Digital Agency"@en .
 
 
 ###  https://w3id.org/italia/data/contact-point/onto-agid
 <https://w3id.org/italia/data/contact-point/onto-agid> rdf:type owl:NamedIndividual ,
-                                                                dcatapit:Organization ,
                                                                 vcard:Kind ,
                                                                 vcard:Organization ;
                                                        vcard:fn "banche dati e open data" ;
@@ -666,4 +760,4 @@ GLi oggetti si possono contrapporre agli eventi, che invece scorrono nel tempo, 
                                            admsapit:SemanticAsset .
 
 
-###  Generated by the OWL API (version 4.2.8.20170104-2310) https://github.com/owlcs/owlapi
+###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi

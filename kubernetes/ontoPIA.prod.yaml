@@ -35,7 +35,7 @@ spec:
     spec:
       containers:
         - name: virtuoso
-          image: nexus.daf.teamdigitale.it/virtuoso:1.0.3
+          image: nexus.daf.teamdigitale.it/virtuoso:1.0.4
           env:
             - name: SPARQL_UPDATE
               value: "true"
