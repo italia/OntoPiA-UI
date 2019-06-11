@@ -32,6 +32,7 @@ curl -L -H "Accept: text/turtle" https://w3id.org/italia/controlled-vocabulary/c
 curl -L -H "Accept: text/turtle" https://w3id.org/italia/controlled-vocabulary/classifications-for-universities/documents-titulus > documents-titulus.ttl
 curl -L -H "Accept: text/turtle" https://w3id.org/italia/controlled-vocabulary/classifications-for-universities/academic-disciplines > academic-disciplines.ttl
 curl -L -H "Accept: text/turtle" https://w3id.org/italia/controlled-vocabulary/classifications-for-people/person-title > person-title.ttl
+curl -L -H "Accept: text/turtle" https://w3id.org/italia/controlled-vocabulary/territorial-classifications/cities > cities.ttl
 cd -
 
 mkdir -p virtuoso/ontologies
@@ -60,5 +61,6 @@ curl -L -H "Accept: text/turtle" https://w3id.org/italia/onto/Language > languag
 curl -L -H "Accept: text/turtle" https://w3id.org/italia/onto/CPSV > cpsv.ttl
 curl -L -H "Accept: text/turtle" https://w3id.org/italia/onto/PublicContract > publiccontract.ttl
 curl -L -H "Accept: text/turtle" https://w3id.org/italia/onto/Route > route.ttl
+curl -L -H "Accept: text/turtle" https://w3id.org/italia/onto/Project > project.ttl
 
 cd -
