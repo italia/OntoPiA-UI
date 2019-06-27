@@ -39,6 +39,7 @@ mkdir -p virtuoso/ontologies
 
 cd virtuoso/ontologies
 
+curl -L -H "Accept: text/turtle" https://w3id.org/italia/onto/ADMS > adms.ttl
 curl -L -H "Accept: text/turtle" https://w3id.org/italia/onto/ACCO > acco.ttl
 curl -L -H "Accept: text/turtle" https://w3id.org/italia/onto/AtlasOfPaths > aop.ttl
 curl -L -H "Accept: text/turtle" https://w3id.org/italia/onto/CLV > clv.ttl
@@ -48,6 +49,7 @@ curl -L -H "Accept: text/turtle" https://w3id.org/italia/onto/CPV > cpv.ttl
 curl -L -H "Accept: text/turtle" https://w3id.org/italia/onto/Cultural-ON > cultural-on.ttl
 curl -L -H "Accept: text/turtle" https://w3id.org/italia/onto/CulturalHeritage > ch.ttl
 curl -L -H "Accept: text/turtle" https://w3id.org/italia/onto/IoT > iot.ttl
+curl -L -H "Accept: text/turtle" https://w3id.org/italia/onto/FULL > full.ttl
 curl -L -H "Accept: text/turtle" https://w3id.org/italia/onto/l0 > l0.ttl
 curl -L -H "Accept: text/turtle" https://w3id.org/italia/onto/MU > mu.ttl
 curl -L -H "Accept: text/turtle" https://w3id.org/italia/onto/PARK > park.ttl
@@ -62,5 +64,6 @@ curl -L -H "Accept: text/turtle" https://w3id.org/italia/onto/CPSV > cpsv.ttl
 curl -L -H "Accept: text/turtle" https://w3id.org/italia/onto/PublicContract > publiccontract.ttl
 curl -L -H "Accept: text/turtle" https://w3id.org/italia/onto/Route > route.ttl
 curl -L -H "Accept: text/turtle" https://w3id.org/italia/onto/Project > project.ttl
+curl -L -H "Accept: text/turtle" https://w3id.org/italia/onto/Transparency > transparency.ttl
 
 cd -
