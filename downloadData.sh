@@ -7,18 +7,21 @@ cd virtuoso/vocabularies
 curl -L -H "Accept: text/turtle" https://w3id.org/italia/controlled-vocabulary/classifications-for-accommodation-facilities/accommodation-star-rating > accommodation-star-rating.ttl
 curl -L -H "Accept: text/turtle" https://w3id.org/italia/controlled-vocabulary/classifications-for-accommodation-facilities/accommodation-typology > accommodation-typology.ttl
 curl -L -H "Accept: text/turtle" https://w3id.org/italia/controlled-vocabulary/classifications-for-culture/subject-disciplines > subject-disciplines.ttl
+curl -L -H "Accept: text/turtle" https://w3id.org/italia/controlled-vocabulary/classifications-for-culture/cultural-interest-places > cultural-places.ttl
 curl -L -H "Accept: text/turtle" https://w3id.org/italia/controlled-vocabulary/classifications-for-organizations/ateco-2007 > ateco-2007.ttl
 curl -L -H "Accept: text/turtle" https://w3id.org/italia/controlled-vocabulary/classifications-for-organizations/cofog-2009 > cofog-2009.ttl
 curl -L -H "Accept: text/turtle" https://w3id.org/italia/controlled-vocabulary/classifications-for-organizations/legal-status > legal-status.ttl
 curl -L -H "Accept: text/turtle" https://w3id.org/italia/controlled-vocabulary/classifications-for-organizations/S13 > S13.ttl
 curl -L -H "Accept: text/turtle" https://w3id.org/italia/controlled-vocabulary/classifications-for-people/education-level > education-level.ttl
 curl -L -H "Accept: text/turtle" https://w3id.org/italia/controlled-vocabulary/classifications-for-people/sex > sex.ttl
+curl -L -H "Accept: text/turtle" https://w3id.org/italia/controlled-vocabulary/classifications-for-people/parental-relationship-types > prt.ttl
 curl -L -H "Accept: text/turtle" https://w3id.org/italia/controlled-vocabulary/classifications-for-public-services/authentication-type > authentication-type.ttl
 curl -L -H "Accept: text/turtle" https://w3id.org/italia/controlled-vocabulary/classifications-for-public-services/channel > channel.ttl
 curl -L -H "Accept: text/turtle" https://w3id.org/italia/controlled-vocabulary/classifications-for-public-services/interactivity-level > interactivity-level.ttl
 curl -L -H "Accept: text/turtle" https://w3id.org/italia/controlled-vocabulary/classifications-for-public-services/life-business-event/life-event > life-event.ttl
 curl -L -H "Accept: text/turtle" https://w3id.org/italia/controlled-vocabulary/classifications-for-public-services/life-business-event/business-event > business-event.ttl
 curl -L -H "Accept: text/turtle" https://w3id.org/italia/controlled-vocabulary/classifications-for-public-services/service-input-output > service-input-output.ttl
+curl -L -H "Accept: text/turtle" https://w3id.org/italia/controlled-vocabulary/classifications-for-public-services/public-services-subject-matters > ps-subject-matters.ttl
 curl -L -H "Accept: text/turtle" https://w3id.org/italia/controlled-vocabulary/licences > licences.ttl
 curl -L -H "Accept: text/turtle" https://w3id.org/italia/controlled-vocabulary/poi-category-classification > poi-category-classification.ttl
 curl -L -H "Accept: text/turtle" https://w3id.org/italia/controlled-vocabulary/public-event-types > public-event-types.ttl
@@ -33,6 +36,11 @@ curl -L -H "Accept: text/turtle" https://w3id.org/italia/controlled-vocabulary/c
 curl -L -H "Accept: text/turtle" https://w3id.org/italia/controlled-vocabulary/classifications-for-universities/academic-disciplines > academic-disciplines.ttl
 curl -L -H "Accept: text/turtle" https://w3id.org/italia/controlled-vocabulary/classifications-for-people/person-title > person-title.ttl
 curl -L -H "Accept: text/turtle" https://w3id.org/italia/controlled-vocabulary/territorial-classifications/cities > cities.ttl
+curl -L -H "Accept: text/turtle" https://w3id.org/italia/controlled-vocabulary/classifications-for-documents/government-documents-types > gdt.ttl
+curl -L -H "Accept: text/turtle" https://w3id.org/italia/controlled-vocabulary/classifications-for-documents/municipal-notice-board > mnb.ttl
+
+
+
 cd -
 
 mkdir -p virtuoso/ontologies
